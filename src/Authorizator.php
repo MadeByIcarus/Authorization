@@ -102,75 +102,11 @@ class Authorizator implements IAuthorizator
 
 
 
-    // string builder
-
     public function getStringBuilder(): IAuthorizatorStringBuilder
     {
         if (!$this->stringBuilder) {
-            $this->stringBuilder = new class($this) implements IAuthorizatorStringBuilder
-            {
-
-                /**
-                 * @var Authorizator
-                 */
-                private $authorizator;
-
-
-
-                public function __construct(Authorizator $authorizator)
-                {
-                    $this->authorizator = $authorizator;
-                }
-
-
-
-                public function addRole(string $role)
-                {
-                    if (!class_exists($role)) {
-                        throw new \InvalidArgumentException("Class $role does not exist.");
-                    }
-                    $this->authorizator->addRole(new $role());
-                }
-
-
-
-                public function addResource(string $resource)
-                {
-                    if (!class_exists($resource)) {
-                        throw new \InvalidArgumentException("Class $resource does not exist.");
-                    }
-                    $this->authorizator->addResource(new $resource());
-                }
-
-
-
-                public function allow(string $role, string $resource, string $privilege)
-                {
-                    if (!class_exists($role)) {
-                        throw new \InvalidArgumentException("Class $role does not exist.");
-                    }
-                    $this->authorizator->allow(new $role(), Action::fromStrings($resource, $privilege));
-                }
-
-
-
-                public function deny(string $role, string $resource, string $privilege)
-                {
-                    if (!class_exists($role)) {
-                        throw new \InvalidArgumentException("Class $role does not exist.");
-                    }
-                    $this->authorizator->deny(new $role(), Action::fromStrings($resource, $privilege));
-                }
-
-
-
-                public function denyActionToAll(string $resource, string $privilege)
-                {
-                    $this->authorizator->denyActionToAll(Action::fromStrings($resource, $privilege));
-                }
-            };
+            $this->stringBuilder = new AuthorizatorBuilder($this);
         }
-
         return $this->stringBuilder;
     }
 

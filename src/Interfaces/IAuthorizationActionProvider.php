@@ -11,5 +11,9 @@ interface IAuthorizationActionProvider
 
 
 
-    public function getPermissionDeniedFallback(): ?callable;
+    public static function redirectDestinationOnPermissionDenied(): ?string;
+
+
+
+    public function getPermissionDeniedCallback(): ?callable;
 }

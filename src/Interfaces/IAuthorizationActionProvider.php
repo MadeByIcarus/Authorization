@@ -15,5 +15,13 @@ interface IAuthorizationActionProvider
 
 
 
+    public function getAuthorizator(): IAuthorizator;
+
+
+
+    public function getAccessIdentity(): ?IAccessIdentity;
+
+
+
     public function getPermissionDeniedCallback(): ?callable;
 }

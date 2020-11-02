@@ -7,15 +7,22 @@ namespace Icarus\Authorization\Traits;
 use Icarus\Authorization\Interfaces\IAction;
 use Icarus\Authorization\Interfaces\IAuthorizationActionProvider;
 use Nette\Application\ForbiddenRequestException;
-use Nette\Application\PresenterFactory;
+use Nette\Application\IPresenterFactory;
 use Nette\Application\UI\Presenter;
 
 
 trait TAuthorizationPresenter
 {
 
-    /** @var PresenterFactory @inject */
-    public $presenterFactory;
+    /** @var IPresenterFactory @inject */
+    protected $presenterFactory;
+
+
+
+    public function injectPresenterFactory(IPresenterFactory $presenterFactory)
+    {
+        $this->presenterFactory = $presenterFactory;
+    }
 
 
 
